@@ -19,10 +19,10 @@ public interface CompanyRepository extends JpaRepository<Company,Integer> {
     @Modifying
     @Query(nativeQuery = true,
             value =
-                    "DELETE project2.companies,project2.coupons,project2.customers_coupons\n" +
-                    "FROM project2.companies\n" +
-                    "JOIN project2.coupons\n" +
-                    "JOIN project2.customers_coupons\n" +
+                    "DELETE d51cp7112h1qre.companies,d51cp7112h1qre.coupons,d51cp7112h1qre.customers_coupons\n" +
+                    "FROM d51cp7112h1qre.companies\n" +
+                    "JOIN d51cp7112h1qre.coupons\n" +
+                    "JOIN d51cp7112h1qre.customers_coupons\n" +
                     "ON companies.id = coupons.company_id = :companyId ;\n")
     void eliminateCompany(@Param("companyId") int companyId);
 }
