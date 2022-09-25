@@ -14,21 +14,20 @@ import java.util.List;
 public interface CouponRepository extends JpaRepository<Coupon,Integer> {
     @Transactional
     @Modifying
-    @Query(nativeQuery = false,
+    @Query(nativeQuery = true,
             value = "INSERT INTO d51cp7112h1qre.customers_coupons(customer_id,coupons_id) VALUES (:customerId, :couponsId);"
     )
     void addCouponPurchase(@Param("customerId") int customerId, @Param("couponsId") int couponsId);
 
     @Transactional
     @Modifying
-    @Query(nativeQuery = false,
+    @Query(nativeQuery = true,
             value = "DELETE FROM d51cp7112h1qre.customers_coupons where (customer_id = :customerId and coupons_id = :couponsId);"
     )
     void deleteCouponPurchase(@Param("customerId") int customerId, @Param("couponsId") int couponsId);
 
-    @Transactional
     @Modifying
-    @Query(nativeQuery = false,
+    @Query(nativeQuery = true,
             value = "select exists (select * FROM public.customers_coupons where coupons_id = :couponsId and customer_id = :customerId ) as res;"
     )
     Integer exitsByCustomerIdAndCouponsId(@Param("customerId") int customerId, @Param("couponsId") int couponsId);
@@ -45,27 +44,24 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
 
     List<Coupon> findAllByCompanyIdAndPriceLessThanEqual(int companyId, double maxPrice);
 
-    @Transactional
     @Modifying
-    @Query(nativeQuery = false,
+    @Query(nativeQuery = true,
             value = "SELECT coupons.*\n" +
                     "FROM public.customers_coupons\n" +
                     "INNER JOIN public.coupons\n" +
                     "ON customers_coupons.coupons_id = coupons.id and customers_coupons.customer_id = :customerId ")
     List<Coupon> findAllByCustomerId(@Param("customerId") int customerId);
 
-    @Transactional
     @Modifying
-    @Query(nativeQuery = false,
+    @Query(nativeQuery = true,
             value = "SELECT coupons.*\n" +
                     "FROM public.customers_coupons\n" +
                     "INNER JOIN public.coupons\n" +
                     "ON customers_coupons.coupons_id = coupons.id and customers_coupons.customer_id = :customerId and category = :category ")
     List<Coupon> findAllByCustomerIdAndCategory(@Param("customerId") int customerId, @Param("category") String category);
 
-    @Transactional
     @Modifying
-    @Query(nativeQuery = false,
+    @Query(nativeQuery = true,
             value = "SELECT coupons.*\n" +
                     "FROM public.customers_coupons\n" +
                     "INNER JOIN public.coupons\n" +
@@ -77,9 +73,8 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
 
     int countByCompanyId(int companyId);
 
-    @Transactional
     @Modifying
-    @Query(nativeQuery = false,
+    @Query(nativeQuery = true,
             value = "SELECT COUNT(customer_id) " +
                     "FROM public.customers_coupons " +
                     "WHERE customer_id = :customerId ")
