@@ -15,14 +15,14 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
     @Transactional
     @Modifying
     @Query(nativeQuery = true,
-            value = "insert into d51cp7112h1qre.customers_coupons(customer_id,coupons_id) values (:customerId, :couponsId);"
+            value = "insert into public.customers_coupons(customer_id,coupons_id) values (:customerId, :couponsId);"
     )
     void addCouponPurchase(@Param("customerId") int customerId, @Param("couponsId") int couponsId);
 
     @Transactional
     @Modifying
     @Query(nativeQuery = true,
-            value = "delete from d51cp7112h1qre.customers_coupons where (customer_id = :customerId and coupons_id = :couponsId);"
+            value = "delete from public.customers_coupons where (customer_id = :customerId and coupons_id = :couponsId);"
     )
     void deleteCouponPurchase(@Param("customerId") int customerId, @Param("couponsId") int couponsId);
 
