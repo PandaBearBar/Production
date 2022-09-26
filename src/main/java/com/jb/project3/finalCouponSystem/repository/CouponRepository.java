@@ -29,7 +29,7 @@ public interface CouponRepository extends JpaRepository<Coupon,Integer> {
     @Query(nativeQuery = true,
             value = "select exists (select * from public.customers_coupons where coupons_id = :couponsId and customer_id = :customerId ) as res;"
     )
-    Integer exitsByCustomerIdAndCouponsId(@Param("customerId") int customerId, @Param("couponsId") int couponsId);
+    boolean exitsByCustomerIdAndCouponsId(@Param("customerId") int customerId, @Param("couponsId") int couponsId);
 
     boolean existsByCompanyIdAndTitle(int companyId, String title);
 

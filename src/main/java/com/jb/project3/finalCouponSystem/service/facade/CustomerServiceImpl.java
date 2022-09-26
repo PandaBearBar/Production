@@ -31,7 +31,7 @@ public class CustomerServiceImpl extends ClientService implements CustomerServic
     public CouponDto purchaseCoupon(int id ,int couponId,CouponDto couponDto) throws CouponSystemException {
         couponDto.setNotId(couponId);
         Coupon coupon = couponMapper.ToDAO(couponDto);
-        if (couponRepository.exitsByCustomerIdAndCouponsId(id, coupon.getId()) == 1 ||
+        if (couponRepository.exitsByCustomerIdAndCouponsId(id, coupon.getId()) ||
                 coupon.getEndDate().equals(Date.valueOf(LocalDate.now())) ||
                 coupon.getAmount() <= 0)
             throw new CouponSystemException(ExceptionMsg.PurchaseDenied);
@@ -45,7 +45,7 @@ public class CustomerServiceImpl extends ClientService implements CustomerServic
     public CouponDto refundCoupon(int id ,int couponId,CouponDto couponDto) throws CouponSystemException {
         couponDto.setNotId(couponId);
         Coupon coupon = couponMapper.ToDAO(couponDto);
-        if (couponRepository.exitsByCustomerIdAndCouponsId(id, coupon.getId()) == 0)
+        if (!couponRepository.exitsByCustomerIdAndCouponsId(id, coupon.getId()))
             throw new CouponSystemException(ExceptionMsg.RefundDenied);
         coupon.setAmount(coupon.getAmount() + 1);
         couponRepository.saveAndFlush(coupon);
